@@ -20,4 +20,12 @@ class ExampleTest extends TestCase
             ->assertSee('id="storefront"', false)
             ->assertSee('window.storefrontPage', false);
     }
+
+    public function test_forwarded_https_is_used_for_asset_urls(): void
+    {
+        $this->withHeader('X-Forwarded-Proto', 'https')
+            ->get('/')
+            ->assertOk()
+            ->assertSee('https://localhost/build/assets/', false);
+    }
 }
